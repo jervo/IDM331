@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>360 Hello World</title>
+  <meta charset="UTF-8">
+  <!-- link to frameworks -->
+  <link rel="stylesheet" href="css/pannellum.css">
+  <script type="application/javascript" src="js/pannellum.js"></script>
+  <style>
+    #wrapper {
+      width: 1200px;
+      margin: 10px auto;
+    }
+    #vrCanvasID {
+      width: 1200px;
+      height: 800px;
+    }
+
+    /* HOTSPOTS */
+    .custom-hotspot {
+      height: 30px;
+      width: 30px;
+      background: #FF4500;
+    }
+    .custom-hotspot-cool {
+      height: 30px;
+      width: 30px;
+      background: #006eff;
+    }
+
+    div.custom-tooltip span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: rgb(224, 236, 58);
+      color: rgb(230, 18, 18);
+      text-align: center;
+      max-width: 200px;
+      padding: 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+    div.custom-tooltip:hover span {
+      visibility: visible;
+    }
+    div.custom-tooltip:hover span:after {
+      content: '';
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border-width: 10px;
+      border-style: solid;
+      border-color:rgb(224, 236, 58) transparent transparent transparent;
+      bottom: -20px;
+      left: -10px;
+      margin: 0 50%;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="vrCanvasID"></div>
+  </div>
+
+  <script type="application/javascript">
+    pannellum.viewer('vrCanvasID', {
+      "type": "equirectangular",
+      "showControls": true,
+      "panorama": "imgs/a-man-riding-a-jetson-electric-bicycle.jpg",
+      "hotSpotDebug": false,
+      "title": "Week 03 Sample",
+      "author": "Cool Photo Maker Inc",
+      "autoRotate": 0,
+      "autoLoad": true,
+      "hotSpots": [{
+        "pitch": 0,
+        "yaw": 0,
+        "type": "info",
+        "text": "IDM-Link",
+        "URL": "https://digm.drexel.edu/idm/"
+      }, 
+      {
+        "pitch": 22.5,
+        "yaw": 24,
+        "cssClass": "custom-hotspot",
+        "createTooltipFunc": hotspot,
+        "createTooltipArgs": "My Other Job",
+        "URL": "https://epvisual.com/"
+      },
+      {
+        "pitch": 10.5,
+        "yaw": 0,
+        "cssClass": "custom-hotspot-cool",
+        "createTooltipFunc": hotspot,
+        "createTooltipArgs": "Disney",
+        "URL": "https://disney.com/"
+      }]
+    });
+
+    // Hot spot tool tip creations
+    function hotspot(hotSpotDiv, args) {
+      hotSpotDiv.classList.add('custom-tooltip');
+      var span = document.createElement('span');
+      span.innerHTML = args;
+      hotSpotDiv.appendChild(span);
+      span.style.width = span.scrollWidth + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -span.scrollHeight - 12 + 'px';
+    } 
+
+  </script>
+</body></html>
