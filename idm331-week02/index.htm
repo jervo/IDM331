@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>360 Hello World</title>
+  <meta charset="UTF-8">
+  <!-- link to frameworks -->
+  <link rel="stylesheet" href="css/pannellum.css">
+  <script type="application/javascript" src="js/pannellum.js"></script>
+  <style>
+    #wrapper {
+      width: 1200px;
+      margin: 10px auto;
+    }
+    #vrCanvasID {
+      width: 1200px;
+      height: 800px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="vrCanvasID"></div>
+  </div>
+
+  <script type="application/javascript">
+    pannellum.viewer('vrCanvasID', {
+      "type": "equirectangular",
+      "showControls": true,
+      "panorama": "imgs/a-man-riding-a-jetson-electric-bicycle.jpg",
+      "autoLoad": true,
+      "hotSpots": [{
+        "pitch": 0,
+        "yaw": 0,
+        "type": "info",
+        "text": "IDM-Link",
+        "URL": "https://digm.drexel.edu/idm/"
+      }]
+    });
+  </script>
+</body></html>
