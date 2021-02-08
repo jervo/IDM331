@@ -124,8 +124,7 @@
 
 <body>
   <div id="wrapper">
-    <!-- <div id="vrCanvasID"></div> -->
-    <video id="panorama" class="video-js vjs-default-skin vjs-big-play-centered"
+    <video id="vrCanvasID" class="video-js vjs-default-skin vjs-big-play-centered"
       controls preload="none" style="width:1200px;height:800px;" 
       poster="imgs/Ayutthay-360-poster.png" crossorigin="anonymous">
         <source src="videos/Ayutthay-360.mp4" type="video/mp4"/>
@@ -138,12 +137,13 @@
   </div>
 
   <script type="application/javascript">
-    videojs('panorama', {
+    videojs('vrCanvasID', {
       plugins: {
         pannellum: {
+          // "hotSpotDebug": true,
           // "title": "Week 05 Sample",
           // "author": "Cool Photo Maker Inc",
-          // "autoRotate": 1,
+          // "autoRotate": 0,
           // "compass": false,
           // "autoLoad": true,
           "hotSpots": [{
@@ -152,6 +152,14 @@
           "type": "info",
           "text": "IDM-Link",
           "URL": "https://digm.drexel.edu/idm/"
+          },
+          {
+            "pitch": 22.5,
+            "yaw": 24,
+            "cssClass": "dogPaw-hotspot",
+            "createTooltipFunc": hotspot,
+            "createTooltipArgs": "My Other Job",
+            "URL": "https://epvisual.com/"
           },      
           {
             "pitch": 0,
@@ -172,7 +180,7 @@
           {
             "pitch": 10.5,
             "yaw": 0,
-            "cssClass": "dogPaw-hotspot",
+            "cssClass": "custom-hotspot-cool",
             "createTooltipFunc": hotspot,
             "createTooltipArgs": "Disney",
             "URL": "https://disney.com/"
