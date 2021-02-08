@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>360 Hello Video W5</title>
+  <meta charset="UTF-8">
+  <!-- link to frameworks -->
+  <link rel="stylesheet" href="css/pannellum.css">
+  <script type="application/javascript" src="js/pannellum.js"></script>
+  <!-- link to video frameworks -->
+  <link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet" type="text/css">
+  <script src="https://vjs.zencdn.net/7.1.0/video.js"></script>
+  <script src="js/videojs-pannellum-plugin.js"></script>
+  <!-- Preload MEDIA -->
+  <link rel="preload" as="image" href="imgs/epv_logo_200x200.png" />
+  <style>
+    body {
+      background-color: #666666;
+      padding: 0px;
+      margin: 0px;
+    }
+    #wrapper {
+      width: 1200px;
+      margin: 10px auto;
+    }
+    #vrCanvasID {
+      width: 1280px;
+      height: 800px;
+    }
+
+    /* HOTSPOTS */
+    .custom-hotspot {
+      height: 30px;
+      width: 30px;
+      background: #FF4500;
+    }
+    .custom-hotspot-cool {
+      height: 30px;
+      width: 30px;
+      background: #006eff;
+    }
+    .dogPaw-hotspot {
+      height: 30px;
+      width: 30px;
+      background-image: url('imgs/noun_Paw_72688.png');
+    }
+
+    /* Tool tip Text */
+    div.custom-tooltip span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: rgb(224, 236, 58);
+      color: rgb(230, 18, 18);
+      text-align: center;
+      max-width: 200px;
+      padding: 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+    div.custom-tooltip:hover span {
+      visibility: visible;
+    }
+    div.custom-tooltip:hover span:after {
+      content: '';
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border-width: 10px;
+      border-style: solid;
+      border-color:rgb(224, 236, 58) transparent transparent transparent;
+      bottom: -20px;
+      left: -10px;
+      margin: 0 50%;
+    }
+
+    /* Tool tip Images */
+    div.custom-tooltip-img span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: #fff;
+      color: #000;
+      text-align: center;
+      width: 220px;
+      padding: 10px 10px 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+    div.custom-tooltip-img:hover span {
+      visibility: visible;
+    }
+    div.custom-tooltip-img:hover span:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+      bottom: -20px;
+      left: -10px;
+      margin: 0 50%;
+    }
+
+    /* Tool Tip Video */
+    div.custom-tooltip-vid span{
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      width: 360px;
+      padding: 10px 10px 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+    div.custom-tooltip-vid:hover span {
+      visibility: visible;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- <div id="vrCanvasID"></div> -->
+    <video id="panorama" class="video-js vjs-default-skin vjs-big-play-centered"
+      controls preload="none" style="width:1200px;height:800px;" 
+      poster="imgs/Ayutthay-360-poster.png" crossorigin="anonymous">
+        <source src="videos/Ayutthay-360.mp4" type="video/mp4"/>
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to
+            a web browser that <a href="http://videojs.com/html5-video-support/"
+            target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+  </div>
+
+  <script type="application/javascript">
+    videojs('panorama', {
+      plugins: {
+        pannellum: {
+          // "title": "Week 05 Sample",
+          // "author": "Cool Photo Maker Inc",
+          // "autoRotate": 1,
+          // "compass": false,
+          // "autoLoad": true,
+          "hotSpots": [{
+          "pitch": 0,
+          "yaw": 0,
+          "type": "info",
+          "text": "IDM-Link",
+          "URL": "https://digm.drexel.edu/idm/"
+          },      
+          {
+            "pitch": 0,
+            "yaw": 36,
+            "cssClass": "custom-hotspot",
+            "createTooltipFunc": hotspotImg,
+            "createTooltipArgs": "imgs/epv_logo_200x200.png",
+            "clickHandlerFunc": displayImgClicked,
+            "clickHandlerArgs": "Display Image on hover"
+          },      
+          {
+            "pitch": 0,
+            "yaw": -33,
+            "cssClass": "custom-hotspot",
+            "createTooltipFunc": hotspotVid,
+            "createTooltipArgs": "videos/jwtIntro.m4v"
+          },
+          {
+            "pitch": 10.5,
+            "yaw": 0,
+            "cssClass": "dogPaw-hotspot",
+            "createTooltipFunc": hotspot,
+            "createTooltipArgs": "Disney",
+            "URL": "https://disney.com/"
+          }]
+        }
+      }
+    });
+
+    function hotspotVid(hotSpotDiv, args){
+      hotSpotDiv.classList.add('custom-tooltip-vid');
+      let span = document.createElement('span');
+      span.innerHTML = "<video id=\"vidID\" width=\"320\" height=\"240\" src=\" " + args + "\" controls></video>";
+      hotSpotDiv.appendChild(span);
+      console.log('span.scrollWidth VID = ' + span.scrollWidth);
+      span.style.width = span.scrollWidth - 20 + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -(span.scrollHeight - hotSpotDiv.offsetHeight) / 2 + 'px';
+      //
+      // Pause video playback on MOUSE OUT
+      let vidObj = document.querySelector('#vidID');
+      vidObj.addEventListener('mouseout', (event) => {
+        vidObj.pause();
+      });
+    }
+
+    // Hot Spot display image
+    function hotspotImg(hotSpotDiv, args){
+      hotSpotDiv.classList.add('custom-tooltip-img');
+      let span = document.createElement('span');
+      span.innerHTML = "<img src='" + args + "'/>";
+      hotSpotDiv.appendChild(span);
+      //
+      console.log('span.scrollWidth IMG = ' + span.scrollWidth + ' Ref: line 11 image preload command');
+      //
+      span.style.width = span.scrollWidth + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -span.scrollHeight - 12 + 'px';
+    }
+
+    function displayImgClicked(hotSpotDiv, args){
+      console.log('displayImgClicked called successfully');
+    }
+
+    // Hot spot tool tip creations
+    function hotspot(hotSpotDiv, args) {
+      hotSpotDiv.classList.add('custom-tooltip');
+      var span = document.createElement('span');
+      span.innerHTML = args;
+      hotSpotDiv.appendChild(span);
+      console.log('span.scrollWidth TEXT = ' + span.scrollWidth);
+      span.style.width = span.scrollWidth + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -span.scrollHeight - 12 + 'px';
+    } 
+  </script>
+</body></html>
