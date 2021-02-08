@@ -1,2 +1,2 @@
 # idm331
-Web VR
+Web VR - Lecture Samples
