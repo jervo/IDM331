@@ -36,6 +36,7 @@ loaderObj.load(
   function ( gltf ) {
     modelObj = gltf.scene;
     scene.add(modelObj);
+    modelObj.position.y = -0.7;
   },
   // While loading is processing
   function ( xhr ) {
